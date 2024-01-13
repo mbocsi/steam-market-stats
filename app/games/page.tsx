@@ -3,7 +3,7 @@ import Image from "next/image";
 import { FaSearch } from "react-icons/fa";
 import { games } from "@/app/lib/games";
 
-export default function Page() {
+export default async function Page() {
   games.sort((a, b) => {
     return a.name.localeCompare(b.name);
   });
@@ -25,11 +25,11 @@ export default function Page() {
           {games.map((game) => (
             <li key={game.name} className="w-full flex">
               <Link
-                href={game.name}
+                href={game.page}
                 className="rounded-full bg-white bg-opacity-0 px-2 py-2 hover:bg-opacity-10 duration-200 text-4xl w-full flex items-center"
               >
                 <Image
-                  src={game.href}
+                  src={game.imgsrc}
                   className="rounded-full aspect-square object-cover mr-4"
                   height={50}
                   width={50}
