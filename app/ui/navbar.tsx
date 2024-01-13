@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const links: { [key: string]: string }[] = [
@@ -13,11 +16,26 @@ export default function Navbar() {
     },
   ];
 
+  const pathname = usePathname();
+  const darkTheme: boolean = pathname === "/" || pathname === "/games";
+
   return (
-    <div className="fixed w-full z-10 top-0 ">
-      <div className="bg-scroll bg-gradient-to-b from-black to-transparent h-32 w-full absolute"></div>
+    <div
+      className={`sticky w-full z-10 top-0 ${
+        darkTheme ? "text-white" : "text-black"
+      }`}
+    >
+      {darkTheme ? (
+        <div className="bg-scroll bg-gradient-to-b from-black to-transparent h-32 w-full absolute"></div>
+      ) : (
+        <div className="bg-scroll bg-white h-16 w-full absolute"></div>
+      )}
       <div className="h-16 w-full absolute items-center flex px-8 z-20">
-        <div className="float-left items-center bg-white bg-opacity-0 hover:bg-opacity-20">
+        <div
+          className={`float-left items-center ${
+            darkTheme ? "bg-white" : "bg-black"
+          } bg-opacity-0 hover:bg-opacity-20`}
+        >
           <Link href="/">
             <Image
               src="/logo.svg"
@@ -34,7 +52,9 @@ export default function Navbar() {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="rounded-full bg-white bg-opacity-0 px-4 py-2 hover:bg-opacity-10 duration-200 text-lg"
+                    className={`rounded-full ${
+                      darkTheme ? "bg-white" : "bg-black"
+                    } bg-opacity-0 px-4 py-2 hover:bg-opacity-10 duration-200 text-lg`}
                   >
                     {link.name}
                   </Link>

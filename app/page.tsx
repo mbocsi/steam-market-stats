@@ -2,8 +2,8 @@ import { FaSearch } from "react-icons/fa";
 
 export default function Page() {
   return (
-    <main className="flex min-h-screen flex-col bg-[url('/dark1.jpg')]">
-      <div className="min-h-screen flex flex-col ">
+    <main className="flex min-h-screen flex-col">
+      <div className="min-h-screen flex flex-col bg-[url('/dark1.jpg')]">
         <div className="p-32">
           <header className="text-8xl w-2/3 font-bold">
             Steam Market Statistics

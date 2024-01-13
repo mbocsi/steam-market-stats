@@ -1,13 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FaSearch } from "react-icons/fa";
+import { games } from "@/app/lib/games";
 
 export default function Page() {
-  const games: { [key: string]: string }[] = [
-    { name: "Dota 2", href: "/dota2.png" },
-    { name: "Rust", href: "/rust.jpg" },
-    { name: "CS2", href: "/cs2.webp" },
-  ];
   games.sort((a, b) => {
     return a.name.localeCompare(b.name);
   });
