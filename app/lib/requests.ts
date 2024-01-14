@@ -8,3 +8,25 @@ export async function getPopularItems() {
   }
   return res.json();
 }
+
+export async function getItemHistory(appid: number, item: string) {
+  const res = await fetch(
+    `https://steamcommunity.com/market/pricehistory/?currency=1&appid=${appid}&market_hash_name=${item}`
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch item history");
+  }
+  return res.json();
+}
+
+export async function getItemCurrent(appid: number, item: string) {
+  const res = await fetch(
+    `https://steamcommunity.com/market/priceoverview/?appid=${appid}&currency=1&market_hash_name=${item}`
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch item history");
+  }
+  return res.json();
+}

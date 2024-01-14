@@ -7,6 +7,14 @@ Gets all steam games (Not used now)
 https://steamcommunity.com/market/search/render/?query=&count=100&search_descriptions=0&sort_column=popular&sort_dir=desc&norender=1
 ```
 Gets all steam market items (first 100 by popularity)
+```
+https://steamcommunity.com/market/priceoverview/?appid=730&currency=3&market_hash_name=StatTrak%E2%84%A2%20M4A1-S%20|%20Hyper%20Beast%20(Minimal%20Wear)
+```
+Gets current price and volume for item
+```
+https://steamcommunity.com/market/pricehistory/?currency=1&appid=730&market_hash_name=Danger%20Zone%20Case
+```
+Gets price history for the item
 
 ## Deploy on Vercel
 
