@@ -9,12 +9,12 @@ export default function Page({ params }: { params: { game: string } }) {
   if (gameInfo) {
     return (
       <div className="min-h-screen flex flex-column">
-        <GameTitle gameName={gameInfo.name} image={gameInfo.imgsrc} />
+        <GameTitle gameInfo={gameInfo} />
       </div>
     );
   } else {
     return (
-      <div className="p-32 bg-white text-black">
+      <div className="p-32 bg-white text-black min-h-screen">
         <header className="text-8xl font-bold">Unknown game</header>
       </div>
     );

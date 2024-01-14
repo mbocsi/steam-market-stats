@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { inter } from "@/app/ui/fonts";
 import "./globals.css";
 import Navbar from "@/app/ui/navbar";
+import Head from "next/head";
 
 export const metadata: Metadata = {
   title: "Steam Market Stats",
@@ -15,6 +16,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <Head>
+        <link
+          rel="apple-touch-icon"
+          href="/apple-icon?png"
+          type="image/png"
+          sizes="png"
+        />
+      </Head>
       <body className={`${inter.className} antialiased`}>
         <Navbar />
         {children}

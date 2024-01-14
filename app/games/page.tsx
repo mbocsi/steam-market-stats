@@ -21,7 +21,7 @@ export default async function Page() {
             placeholder="Search games"
           ></input>
         </div>
-        <ul className="space-y-10 my-10 columns-3">
+        <ul className="space-y-10 my-10 columns-2">
           {games.map((game) => (
             <li key={game.name} className="w-full flex">
               <Link

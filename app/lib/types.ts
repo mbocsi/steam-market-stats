@@ -3,4 +3,5 @@ type GameElement = {
   page: string;
   imgsrc: string;
   appid: number;
+  description: string;
 };
