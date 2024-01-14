@@ -31,4 +31,12 @@ export const games: GameElement[] = [
     description:
       "Play PUBG: BATTLEGROUNDS for free. Land on strategic locations, loot weapons and supplies, and survive to become the last team standing across various, diverse Battlegrounds. Squad up and join the Battlegrounds for the original Battle Royale experience that only PUBG: BATTLEGROUNDS can offer.",
   },
+  {
+    name: "Team Fortress 2",
+    page: "tf2",
+    imgsrc: "/tf2.png",
+    appid: 440,
+    description:
+      "Nine distinct classes provide a broad range of tactical abilities and personalities. Constantly updated with new game modes, maps, equipment and, most importantly, hats!",
+  },
 ];

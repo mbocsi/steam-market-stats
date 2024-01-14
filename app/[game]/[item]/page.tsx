@@ -12,7 +12,7 @@ export default async function Page({
     (x) => x.page === params.game
   );
   const hashName: string = params.item;
-  const itemName: string = decodeURI(hashName);
+  const itemName: string = decodeURIComponent(hashName);
   const timestamp = new Date();
   const currentInfo = gameInfo
     ? await getItemCurrent(gameInfo.appid, hashName)

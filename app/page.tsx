@@ -4,17 +4,18 @@ import TopItems from "@/app/ui/topitems";
 import { top3items } from "@/app/lib/placholderdata";
 
 export default async function Page() {
-  // const response = await getPopularItems();
-  // const popItems = response.results.map((item: any) => {
-  //   return {
-  //     name: item.name,
-  //     game: item.app_name,
-  //     sell_price: item.sell_price_text,
-  //     icon: `http://cdn.steamcommunity.com/economy/image/${item.asset_description.icon_url}`,
-  //   };
-  // });
+  const response = await getPopularItems();
+  const popItems = response.results.map((item: any) => {
+    return {
+      name: item.name,
+      game: item.app_name,
+      appid: item.asset_description.appid,
+      sell_price: item.sell_price_text,
+      icon: `http://cdn.steamcommunity.com/economy/image/${item.asset_description.icon_url}`,
+    };
+  });
 
-  const popItems = top3items;
+  // const popItems = top3items;
 
   return (
     <main className="flex min-h-screen flex-col">
