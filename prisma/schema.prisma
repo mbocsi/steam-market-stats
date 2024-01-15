@@ -17,8 +17,8 @@ model App {
   updatedAt DateTime @updatedAt
   appName String @unique
   appIcon String @unique
-  appDescription String @unique
-  appWebsite String
+  appDescription String @db.Text
+  appWebsite String?
   items Item[]
 }
 
@@ -44,7 +44,8 @@ model Item {
 model Price {
   id Int @id @default(autoincrement())
   date DateTime 
-  price Int
+  price Decimal
+  volume Int
   item Item @relation(fields: [itemId], references: [itemNameId])
   itemId Int
 
