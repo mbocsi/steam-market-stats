@@ -14,7 +14,6 @@ export default async function Page() {
       icon: `http://cdn.steamcommunity.com/economy/image/${item.asset_description.icon_url}`,
     };
   });
-
   // const popItems = top3items;
 
   return (

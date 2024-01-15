@@ -18,6 +18,8 @@ export default async function Page({
     ? await getItemCurrent(gameInfo.appid, hashName)
     : undefined;
 
+  // console.log(currentInfo);
+
   if (gameInfo && currentInfo) {
     return (
       <div className="min-h-screen flex flex-column">
