@@ -4,6 +4,10 @@ http://api.steampowered.com/ISteamApps/GetAppList/v0002/?key=STEAMKEY&format=jso
 ```
 Gets all steam games (Not used now)
 ```
+https://store.steampowered.com/api/appdetails?appids=730
+```
+Gets info on one game
+```
 https://steamcommunity.com/market/search/render/?query=&count=100&search_descriptions=0&sort_column=popular&sort_dir=desc&norender=1
 ```
 Gets all steam market items (first 100 by popularity)
@@ -15,6 +19,10 @@ Gets current price and volume for item
 https://steamcommunity.com/market/pricehistory/?currency=1&appid=730&market_hash_name=Danger%20Zone%20Case
 ```
 Gets price history for the item
+```
+https://steamcommunity.com/market/itemordershistogram?country=US&language=english&currency=1&item_nameid=176024744&two_factor=0
+```
+Gets price orders on an item
 
 ## Deploy on Vercel
 

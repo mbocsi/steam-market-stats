@@ -3,6 +3,8 @@ import { getItemCurrent } from "@/app/lib/requests";
 import Image from "next/image";
 import Link from "next/link";
 
+export const revalidate = 10;
+
 export default async function Page({
   params,
 }: {

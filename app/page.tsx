@@ -3,6 +3,8 @@ import { getPopularItems } from "@/app/lib/requests";
 import TopItems from "@/app/ui/topitems";
 import { top3items } from "@/app/lib/placholderdata";
 
+export const revalidate = 10;
+
 export default async function Page() {
   const response = await getPopularItems();
   const popItems = response.results.map((item: any) => {
