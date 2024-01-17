@@ -5,7 +5,7 @@ import Navbar from "@/app/ui/navbar";
 
 export const metadata: Metadata = {
   title: "Steam Market Stats",
-  description: "A site that displays market statistics from steam",
+  description: "A site that displays market statistics from the steam market",
 };
 
 export default function RootLayout({
