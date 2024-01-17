@@ -40,3 +40,6 @@ bun.lockb
 
 # Privi info
 .env
+
+# My personal notes
+notes.md
