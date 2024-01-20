@@ -26,9 +26,9 @@ model Item {
   itemNameId Int  @id
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  itemHashName  String 
+  itemHashName  String @unique
   itemName  String @unique
-  itemIcon  String @unique
+  itemIcon  String @unique @db.VarChar(256)
   highestBuyOrder Decimal?
   lowestSellOrder Decimal?
   itemCurrency String?
