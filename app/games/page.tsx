@@ -1,26 +1,24 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FaSearch } from "react-icons/fa";
 import { PrismaClient } from "@prisma/client";
+import SearchBar from "@/app/ui/searchbar";
 
-export default async function Page() {
+export default async function Page(props: any) {
+  const { searchParams } = props;
+  console.log(searchParams.query);
   const prisma = new PrismaClient();
-  const games = await prisma.app.findMany({});
+  const games = searchParams.query
+    ? await prisma.app.findMany({
+        where: { appName: { contains: searchParams.query } },
+      })
+    : await prisma.app.findMany({});
   prisma.$disconnect();
 
   return (
     <div className="flex min-h-screen flex-col bg-[url('/dark1.jpg')]">
-      <div className="p-32">
+      <div className="p-32 flex flex-col gap-8">
         <header className="text-8xl font-bold">Games</header>
-        <div className="p-2 rounded-full bg-white w-fit flex text-black items-center space-x-3 my-8">
-          <button className="rounded-full bg-gray-300 bg-opacity-0 p-3 hover:bg-opacity-50 duration-200">
-            <FaSearch size="1.5em" />
-          </button>
-          <input
-            className="focus:outline-none text-2xl"
-            placeholder="Search games"
-          ></input>
-        </div>
+        <SearchBar placeholder="Search games" href="/games" />
         <ul className="space-y-10 my-10 columns-2">
           {games.map((game) => (
             <li key={game.appName} className="w-full flex">

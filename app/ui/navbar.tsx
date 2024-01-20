@@ -10,10 +10,10 @@ export default function Navbar() {
       href: "/games",
       name: "Games",
     },
-    {
-      href: "/market",
-      name: "Market",
-    },
+    // {
+    //   href: "/market",
+    //   name: "Market",
+    // },
   ];
 
   const pathname = usePathname();
@@ -62,7 +62,7 @@ export default function Navbar() {
         </div>
         <div className="float-right h-full flex justify-center items-center">
           <Link
-            href=""
+            href="/"
             className="whitespace-nowrap bg-teal-500 px-4 py-2 rounded-lg text-lg"
           >
             Get started
