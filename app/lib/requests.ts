@@ -31,3 +31,14 @@ export async function getItemCurrent(appid: number, item: string) {
   }
   return res.json();
 }
+
+export async function getItemOrders(itemNameId: number) {
+  const url = `https://steamcommunity.com/market/itemordershistogram?country=US&language=english&currency=1&item_nameid=${itemNameId}&two_factor=0`;
+
+  const res = await fetch(url);
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch item orders");
+  }
+  return res.json();
+}

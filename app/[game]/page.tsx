@@ -1,15 +1,17 @@
 import GameTitle from "./title";
-import { games } from "@/app/lib/games";
+import { PrismaClient } from "@prisma/client";
 
-export default function Page({ params }: { params: { game: string } }) {
-  const gameInfo: GameElement | undefined = games.find(
-    (x) => x.page === params.game
-  );
+export default async function Page({ params }: { params: { game: string } }) {
+  const prisma = new PrismaClient();
+  const game = await prisma.app.findUnique({
+    where: { appId: parseInt(params.game) },
+  });
+  prisma.$disconnect();
 
-  if (gameInfo) {
+  if (game) {
     return (
       <div className="min-h-screen flex flex-column">
-        <GameTitle gameInfo={gameInfo} />
+        <GameTitle gameInfo={game} />
       </div>
     );
   } else {

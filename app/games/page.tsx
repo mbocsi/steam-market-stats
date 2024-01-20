@@ -1,12 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FaSearch } from "react-icons/fa";
-import { games } from "@/app/lib/games";
+import { PrismaClient } from "@prisma/client";
 
 export default async function Page() {
-  games.sort((a, b) => {
-    return a.name.localeCompare(b.name);
-  });
+  const prisma = new PrismaClient();
+  const games = await prisma.app.findMany({});
+  prisma.$disconnect();
 
   return (
     <div className="flex min-h-screen flex-col bg-[url('/dark1.jpg')]">
@@ -23,19 +23,19 @@ export default async function Page() {
         </div>
         <ul className="space-y-10 my-10 columns-2">
           {games.map((game) => (
-            <li key={game.name} className="w-full flex">
+            <li key={game.appName} className="w-full flex">
               <Link
-                href={game.page}
+                href={`/${game.appId}`}
                 className="rounded-full bg-white bg-opacity-0 px-2 py-2 hover:bg-opacity-10 duration-200 text-4xl w-full flex items-center"
               >
                 <Image
-                  src={game.imgsrc}
-                  className="rounded-full aspect-square object-cover mr-4"
+                  src={game.appIcon}
+                  className="rounded-full mr-4"
                   height={50}
-                  width={50}
-                  alt={`Image of ${game.name} logo`}
+                  width={100}
+                  alt={`Image of ${game.appName} logo`}
                 ></Image>
-                {game.name}
+                {game.appName}
               </Link>
             </li>
           ))}
