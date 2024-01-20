@@ -1,10 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 import { FaSearch } from "react-icons/fa";
 
 export default function GameTitle(props: any) {
-  const { gameInfo, topItems } = props;
+  const { gameInfo } = props;
   return (
-    <div className="p-32 text-black min-h-screen bg-white w-full flex flex-col gap-12">
+    <div className="p-32 pb-16 bg-white w-full flex flex-col gap-12">
       <div className="flex items-center my-12">
         <Image
           src={gameInfo.appIcon}
@@ -25,7 +26,6 @@ export default function GameTitle(props: any) {
           placeholder="Search items here"
         ></input>
       </div>
-      <div></div>
     </div>
   );
 }

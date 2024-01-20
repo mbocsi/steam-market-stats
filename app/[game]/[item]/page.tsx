@@ -38,7 +38,7 @@ export default async function Page({
             </div>
             <div className="flex flex-col h-full justify-between">
               <header className="text-6xl">{item.itemName}</header>
-              <Link href={`${game.appWebsite}`}>
+              <Link href={`/${game.appId}`}>
                 <p className="text-xl text-cyan-500">{game.appName}</p>
               </Link>
 

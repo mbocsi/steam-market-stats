@@ -31,17 +31,14 @@ export default function Navbar() {
         <div className="bg-scroll bg-white h-16 w-full absolute"></div>
       )}
       <div className="h-16 w-full absolute items-center flex px-8 z-20">
-        <div
-          className={`float-left items-center ${
-            darkTheme ? "bg-white" : "bg-black"
-          } bg-opacity-0 hover:bg-opacity-20`}
-        >
+        <div className={`float-left items-centerbg-opacity-0`}>
           <Link href="/">
             <Image
-              src="/logo.svg"
+              src="/logo.png"
               width={200}
               height={64}
               alt="Steam market stats logo"
+              className={darkTheme ? `invert` : ""}
             />
           </Link>
         </div>
