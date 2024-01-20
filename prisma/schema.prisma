@@ -38,7 +38,7 @@ model Item {
   gameId Int
   itemHistory Price[]
 
-  @@index([gameId])
+  @@index([gameId, itemHashName])
 }
 
 model Price {
