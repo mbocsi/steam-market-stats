@@ -1,9 +1,9 @@
-import { FaSearch, FaAngleDown } from "react-icons/fa";
+import { FaAngleDown } from "react-icons/fa";
 import { getPopularItems } from "@/app/lib/requests";
 import SearchBar from "@/app/ui/searchbar";
 import TopItems from "@/app/ui/topitems";
 
-export const revalidate = 10;
+export const revalidate = 30;
 
 export default async function Page() {
   const response = await getPopularItems();

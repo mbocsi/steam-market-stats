@@ -1,6 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
-import { FaSearch } from "react-icons/fa";
 import SearchBar from "@/app/ui/searchbar";
 
 export default function GameTitle(props: any) {

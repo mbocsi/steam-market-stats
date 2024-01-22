@@ -1,16 +1,16 @@
 import { getItemOrders } from "@/app/lib/requests";
 import Image from "next/image";
 import Link from "next/link";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/prisma/db";
 
-export const revalidate = 10;
+export const dynamic = "force-dynamic";
 
 export default async function Page({
   params,
 }: {
   params: { game: string; item: string };
 }) {
-  const prisma = new PrismaClient();
+  prisma.$connect();
   const game = await prisma.app.findUnique({
     where: { appId: parseInt(params.game) },
   });

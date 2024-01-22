@@ -1,12 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/prisma/db";
 import SearchBar from "@/app/ui/searchbar";
 
 export default async function Page(props: any) {
   const { searchParams } = props;
-  console.log(searchParams.query);
-  const prisma = new PrismaClient();
+  prisma.$connect();
   const games = searchParams.query
     ? await prisma.app.findMany({
         where: { appName: { contains: searchParams.query } },
