@@ -1,9 +1,9 @@
-import { FaSearch, FaAngleDown } from "react-icons/fa";
+import { FaAngleDown } from "react-icons/fa";
 import { getPopularItems } from "@/app/lib/requests";
+import SearchBar from "@/app/ui/searchbar";
 import TopItems from "@/app/ui/topitems";
-import { top3items } from "@/app/lib/placholderdata";
 
-export const revalidate = 10;
+export const revalidate = 30;
 
 export default async function Page() {
   const response = await getPopularItems();
@@ -27,15 +27,7 @@ export default async function Page() {
         <p className="text-2xl font-semibold">
           Find complete market statistics on any item from any game on steam.
         </p>
-        <div className="p-3 rounded-full bg-white w-fit flex text-black items-center space-x-3">
-          <button className="rounded-full bg-gray-300 bg-opacity-0 p-3 hover:bg-opacity-50 duration-200">
-            <FaSearch size="2em" />
-          </button>
-          <input
-            className="focus:outline-none text-3xl bg-transparent"
-            placeholder="Search items here"
-          ></input>
-        </div>
+        <SearchBar placeholder="Search items here" href="/search" />
         <TopItems items={popItems} />
         <div className="mt-auto flex flex-col items-center animate-bounce">
           <div></div>

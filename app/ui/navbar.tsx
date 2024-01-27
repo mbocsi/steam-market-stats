@@ -10,10 +10,10 @@ export default function Navbar() {
       href: "/games",
       name: "Games",
     },
-    {
-      href: "/market",
-      name: "Market",
-    },
+    // {
+    //   href: "/market",
+    //   name: "Market",
+    // },
   ];
 
   const pathname = usePathname();
@@ -31,17 +31,14 @@ export default function Navbar() {
         <div className="bg-scroll bg-white h-16 w-full absolute"></div>
       )}
       <div className="h-16 w-full absolute items-center flex px-8 z-20">
-        <div
-          className={`float-left items-center ${
-            darkTheme ? "bg-white" : "bg-black"
-          } bg-opacity-0 hover:bg-opacity-20`}
-        >
+        <div className={`float-left items-centerbg-opacity-0`}>
           <Link href="/">
             <Image
-              src="/logo.svg"
+              src="/logo.png"
               width={200}
               height={64}
               alt="Steam market stats logo"
+              className={darkTheme ? `invert` : ""}
             />
           </Link>
         </div>
@@ -65,7 +62,7 @@ export default function Navbar() {
         </div>
         <div className="float-right h-full flex justify-center items-center">
           <Link
-            href=""
+            href="/"
             className="whitespace-nowrap bg-teal-500 px-4 py-2 rounded-lg text-lg"
           >
             Get started
