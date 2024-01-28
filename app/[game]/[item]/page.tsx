@@ -1,7 +1,8 @@
-import { getItemOrders } from "@/app/lib/requests";
+import { getItemCurrent } from "@/app/lib/requests";
 import Image from "next/image";
 import Link from "next/link";
 import prisma from "@/prisma/db";
+import ItemStats from "@/app/[game]/[item]/itemstats";
 
 export const dynamic = "force-dynamic";
 
@@ -22,7 +23,7 @@ export default async function Page({
   prisma.$disconnect();
 
   if (game && item) {
-    const orders = await getItemOrders(item.itemNameId);
+    const priceOverview = await getItemCurrent(730, item.itemHashName);
     return (
       <div className="min-h-screen flex flex-column">
         <div className="p-16 pt-24 pb-0 text-black min-h-screen bg-white w-full flex flex-col gap-12">
@@ -41,14 +42,22 @@ export default async function Page({
               <Link href={`/${game.appId}`}>
                 <p className="text-xl text-cyan-500">{game.appName}</p>
               </Link>
-
-              <p className="text-6xl font-semibold">
-                {orders["price_prefix"] +
-                  (orders["lowest_sell_order"] * 0.01).toFixed(2)}
+              <div className="flex flex-row align-bottom">
+                <p className="text-6xl font-semibold">
+                  {priceOverview["lowest_price"]}
+                </p>
+                <div className="flex flex-col justify-end">
+                  <p className="opacity-50 ml-2">
+                    {priceOverview["volume"]} sold in last 24 hours
+                  </p>
+                </div>
+              </div>
+              <p className="opacity-50 font-semibold">
+                At {timestamp.toLocaleString()}
               </p>
-              <p className="opacity-50">At {timestamp.toLocaleString()}</p>
             </div>
           </div>
+          <ItemStats />
         </div>
       </div>
     );
