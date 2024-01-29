@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getItemOrders } from "@/app/lib/requests";
 
 enum Tab {
   Summary,
@@ -8,9 +9,78 @@ enum Tab {
   Supply,
 }
 
+function ItemSummary(props: any) {
+  const { item } = props;
+  return (
+    <div className="flex flex-col p-4">
+      <div className="p-4 flex flex-row justify-between">
+        <p>PREVIOUS CLOSE</p>
+        <p>$xx.xx</p>
+      </div>
+      <div className="p-4 border-t-2 flex flex-row justify-between">
+        <p>DAY RANGE</p>
+        <p>$xx.xx - $xx.xx</p>
+      </div>
+      <div className="p-4 border-t-2 flex flex-row justify-between">
+        <p>YEAR RANGE</p>
+        <p>$xx.xx - $xx.xx</p>
+      </div>
+      <div className="p-4 border-t-2 flex flex-row justify-between">
+        <p>MARKET CAP</p>
+        <p>$xxxxx</p>
+      </div>
+    </div>
+  );
+}
+
+function ItemHistory() {
+  return (
+    <div className="p-4 flex flex-col text-center justify-center">
+      <p className="text-4xl">Item History Placeholder</p>
+    </div>
+  );
+}
+
+function ItemOrders(props: any) {
+  const { item, orders } = props;
+  console.log(orders);
+  if (orders) {
+    return (
+      <div
+        className="p-4"
+        dangerouslySetInnerHTML={{ __html: orders["sell_order_table"] }}
+      ></div>
+    );
+  } else {
+    return <div className="p-4">Error getting orders</div>;
+  }
+}
+
+function ItemSupply() {
+  return (
+    <div className="p-4 flex flex-col text-center justify-center">
+      <p className="text-4xl">Item Supply Placeholder</p>
+    </div>
+  );
+}
+
+function ItemData(props: any) {
+  const { tab, item, orders } = props;
+  switch (tab) {
+    case Tab.Summary:
+      return <ItemSummary item={item} />;
+    case Tab.History:
+      return <ItemHistory />;
+    case Tab.Orders:
+      return <ItemOrders item={item} orders={orders} />;
+    case Tab.Supply:
+      return <ItemSupply />;
+  }
+}
+
 export default function ItemStats(props: any) {
   const [tab, setTab] = useState(Tab.Summary);
-  const { orders } = props;
+  const { item, orders } = props;
 
   return (
     <div className="bg-slate-100 h-full rounded-lg">
@@ -48,20 +118,8 @@ export default function ItemStats(props: any) {
           Supply and Demand
         </button>
       </div>
-      <div className="flex flex-col p-4">
-        <div className="p-4 flex flex-row justify-between">
-          <p>PREVIOUS CLOSE</p>
-          <p>Price</p>
-        </div>
-        <div className="p-4 border-t-2 flex flex-row justify-between">
-          <p>DAY RANGE</p>
-          <p>Price</p>
-        </div>
-        <div className="p-4 border-t-2 flex flex-row justify-between">
-          <p>MARKET CAP</p>
-          <p>Price</p>
-        </div>
-      </div>
+
+      <ItemData tab={tab} item={item} orders={orders} />
     </div>
   );
 }

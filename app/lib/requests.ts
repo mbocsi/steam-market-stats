@@ -27,7 +27,9 @@ export async function getItemHistory(appid: number, item: string) {
   const res = await fetch(url);
 
   if (!res.ok) {
-    throw new Error("Failed to fetch item history");
+    throw new Error(
+      `Failed to fetch item history ${res.status} ${res.statusText}\nhttps://steamcommunity.com/market/pricehistory/?currency=1&appid=${appid}&market_hash_name=${item}`
+    );
   }
   return res.json();
 }
@@ -38,7 +40,9 @@ export async function getItemCurrent(appid: number, item: string) {
   const res = await fetch(url);
 
   if (!res.ok) {
-    throw new Error("Failed to fetch item history");
+    throw new Error(
+      `Failed to fetch item history ${res.status} ${res.statusText}\nhttps://steamcommunity.com/market/priceoverview/?appid=${appid}&currency=1&market_hash_name=${item}`
+    );
   }
   return res.json();
 }
@@ -49,7 +53,9 @@ export async function getItemOrders(itemNameId: number) {
   const res = await fetch(url);
 
   if (!res.ok) {
-    throw new Error("Failed to fetch item orders");
+    throw new Error(
+      `Failed to fetch item orders ${res.status} ${res.statusText}\nhttps://steamcommunity.com/market/itemordershistogram?country=US&language=english&currency=1&item_nameid=${itemNameId}&two_factor=0`
+    );
   }
   return res.json();
 }
