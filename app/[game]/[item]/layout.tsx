@@ -1,7 +1,8 @@
 import ItemTitle from "./itemtitle";
 import ItemStats from "./itemstats";
+import { getItem, getApp } from "@/app/lib/dbrequests";
 
-export default function Layout({
+export default async function Layout({
   children,
   params,
 }: {
@@ -13,19 +14,12 @@ export default function Layout({
 }) {
   const { game, item } = params;
   const timestamp = new Date();
-  // let gameData, itemData;
-  // fetch(`/api/db/getApp?appid=${game}`)
-  //   .then((res) => res.json())
-  //   .then((json) => (gameData = json));
-  // fetch(`/api/db/getItem?itemHashName=${item}`)
-  //   .then((res) => res.json())
-  //   .then((json) => {
-  //     itemData = json;
-  //   });
+  const iteminfo = await getItem(decodeURIComponent(item));
+  const appinfo = await getApp(parseInt(game));
   return (
     <div className="min-h-screen flex flex-column">
       <div className="p-16 pt-24 pb-0 text-black min-h-screen bg-white w-full flex flex-col gap-12">
-        <ItemTitle gameid={game} itemHash={item} timestamp={timestamp} />
+        <ItemTitle app={appinfo} item={iteminfo} timestamp={timestamp} />
         <ItemStats game={game} item={item}>
           {children}
         </ItemStats>

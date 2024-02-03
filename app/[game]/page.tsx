@@ -1,5 +1,5 @@
 import GameTitle from "./title";
-import prisma from "@/prisma/db";
+import { getApp } from "@/app/lib/dbrequests";
 import { getPopularGameItems } from "../lib/requests";
 import Link from "next/link";
 import Image from "next/image";
@@ -9,11 +9,7 @@ export const revalidate = 30;
 export default async function Page({ params }: { params: { game: string } }) {
   let game;
   if (params.game) {
-    prisma.$connect();
-    game = await prisma.app.findUnique({
-      where: { appId: parseInt(params.game) },
-    });
-    prisma.$disconnect();
+    game = await getApp(parseInt(params.game));
   }
 
   if (game) {

@@ -4,99 +4,60 @@ import { getItemCurrent } from "@/app/lib/requests";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Prisma } from "@prisma/client";
 
 export default function ItemTitle(props: any) {
-  const { itemHash, gameid, timestamp } = props;
-  const [item, setItem] = useState<Prisma.ItemSelect | null>(null);
-  const [game, setGame] = useState<Prisma.AppSelect | null>(null);
+  const { item, app, timestamp } = props;
+  console.log(props);
   const [priceOverview, setPriceOverview] = useState(null);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`/api/db/getApp?appid=${gameid}`)
-      .then((res) => res.json())
-      .then((json) => {
-        setGame(json);
-      });
-    fetch(`/api/db/getItem?itemHashName=${itemHash}`)
-      .then((res) => res.json())
-      .then((json) => {
-        setItem(json);
+    getItemCurrent(app?.appId, encodeURIComponent(item?.itemHashName)).then(
+      (json) => {
+        setPriceOverview(json);
         setLoading(false);
-      });
-    getItemCurrent(gameid, itemHash).then((json) => {
-      setPriceOverview(json);
-    });
-  }, []);
-  if (isLoading) {
-    return (
-      <div className="flex flex-row items-center gap-10">
-        <div className="aspect-square flex items-center bg-slate-200 rounded-full p-4">
-          {/* <Image
-            src={`http://cdn.steamcommunity.com/economy/image/${item.itemIcon}`}
-            width={150}
-            height={150}
-            alt={`Icon for ${item.itemName}`}
-            className=""
-          ></Image> */}
-          <div className="w-40 h-40 bg"></div>
-        </div>
-        <div className="flex flex-col h-full justify-between">
-          <header className="text-6xl">Loading</header>
-          <Link href={``}>
-            <p className="text-xl text-cyan-500">Loading</p>
-          </Link>
-          <div className="flex flex-row align-bottom">
-            <p className="text-6xl font-semibold">
-              {priceOverview ? priceOverview["lowest_price"] : "Error"}
-            </p>
-            <div className="flex flex-col justify-end">
-              <p className="opacity-50 ml-2">
-                {priceOverview ? priceOverview["volume"] : "Unknown"} sold in
-                last 24 hours
-              </p>
-            </div>
-          </div>
-          <p className="opacity-50 font-semibold">
-            At {timestamp.toLocaleString()}
-          </p>
-        </div>
-      </div>
+      }
     );
-  } else if (item && game) {
-    return (
-      <div className="flex flex-row items-center gap-10">
-        <div className="aspect-square flex items-center bg-slate-200 rounded-full p-4">
+  }, [item, app]);
+  return (
+    <div className="flex flex-row items-center gap-10">
+      <div className="aspect-square flex items-center bg-slate-200 rounded-full p-4">
+        {isLoading ? (
+          <div className="w-40 h-40 bg"></div>
+        ) : (
           <Image
             src={`http://cdn.steamcommunity.com/economy/image/${item.itemIcon}`}
-            width={150}
-            height={150}
+            width={160}
+            height={160}
             alt={`Icon for ${item.itemName}`}
             className=""
           ></Image>
-        </div>
-        <div className="flex flex-col h-full justify-between">
-          <header className="text-6xl">{item.itemName}</header>
-          <Link href={`/${game.appId}`}>
-            <p className="text-xl text-cyan-500">{game.appName}</p>
-          </Link>
-          <div className="flex flex-row align-bottom">
-            <p className="text-6xl font-semibold">
-              {priceOverview ? priceOverview["lowest_price"] : "Error"}
-            </p>
-            <div className="flex flex-col justify-end">
-              <p className="opacity-50 ml-2">
-                {priceOverview ? priceOverview["volume"] : "Unknown"} sold in
-                last 24 hours
-              </p>
-            </div>
-          </div>
-          <p className="opacity-50 font-semibold">
-            At {timestamp.toLocaleString()}
-          </p>
-        </div>
+        )}
       </div>
-    );
-  }
+      <div className="flex flex-col h-full justify-between">
+        <header className="text-6xl">
+          {isLoading ? "Loading" : item.itemName}
+        </header>
+        <Link href={isLoading ? "" : `/${app.appId}`}>
+          <p className="text-xl text-cyan-500">
+            {isLoading ? "Loading" : app.appName}
+          </p>
+        </Link>
+        <div className="flex flex-row align-bottom">
+          <p className="text-6xl font-semibold">
+            {priceOverview ? priceOverview["lowest_price"] : "Loading"}
+          </p>
+          <div className="flex flex-col justify-end">
+            <p className="opacity-50 ml-2">
+              {priceOverview ? priceOverview["volume"] : "Unknown"} sold in last
+              24 hours
+            </p>
+          </div>
+        </div>
+        <p className="opacity-50 font-semibold">
+          At {timestamp.toLocaleString()}
+        </p>
+      </div>
+    </div>
+  );
 }
