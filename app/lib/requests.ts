@@ -35,20 +35,20 @@ export async function getItemHistory(appid: number, item: string) {
 }
 
 export async function getItemCurrent(appid: number, item: string) {
-  const url = `https://steamcommunity.com/market/priceoverview/?appid=${appid}&currency=1&market_hash_name=${item}`;
+  const url = `/api/market/priceoverview/?appid=${appid}&currency=1&market_hash_name=${item}`;
   // console.log(`Attempted fetch: ${url}`);
   const res = await fetch(url);
 
   if (!res.ok) {
     throw new Error(
-      `Failed to fetch item history ${res.status} ${res.statusText}\nhttps://steamcommunity.com/market/priceoverview/?appid=${appid}&currency=1&market_hash_name=${item}`
+      `Failed to fetch current item status ${res.status} ${res.statusText}\nhttps://steamcommunity.com/market/priceoverview/?appid=${appid}&currency=1&market_hash_name=${item}`
     );
   }
   return res.json();
 }
 
 export async function getItemOrders(itemNameId: number) {
-  const url = `https://steamcommunity.com/market/itemordershistogram?country=US&language=english&currency=1&item_nameid=${itemNameId}&two_factor=0`;
+  const url = `/api/market/itemordershistogram?country=US&language=english&currency=1&item_nameid=${itemNameId}&two_factor=0`;
 
   const res = await fetch(url);
 

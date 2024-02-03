@@ -7,11 +7,14 @@ import Image from "next/image";
 export const revalidate = 30;
 
 export default async function Page({ params }: { params: { game: string } }) {
-  prisma.$connect();
-  const game = await prisma.app.findUnique({
-    where: { appId: parseInt(params.game) },
-  });
-  prisma.$disconnect();
+  let game;
+  if (params.game) {
+    prisma.$connect();
+    game = await prisma.app.findUnique({
+      where: { appId: parseInt(params.game) },
+    });
+    prisma.$disconnect();
+  }
 
   if (game) {
     const response = await getPopularGameItems(game.appId, 10);
