@@ -13,13 +13,12 @@ export default async function Layout({
   };
 }) {
   const { game, item } = params;
-  const timestamp = new Date();
   const iteminfo = await getItem(decodeURIComponent(item));
   const appinfo = await getApp(parseInt(game));
   return (
     <div className="min-h-screen flex flex-column">
       <div className="p-16 pt-24 pb-0 text-black min-h-screen bg-white w-full flex flex-col gap-12">
-        <ItemTitle app={appinfo} item={iteminfo} timestamp={timestamp} />
+        <ItemTitle app={appinfo} item={iteminfo} />
         <ItemStats game={game} item={item}>
           {children}
         </ItemStats>

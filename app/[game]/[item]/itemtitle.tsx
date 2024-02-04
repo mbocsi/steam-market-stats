@@ -5,9 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export default function ItemTitle(props: any) {
-  const { item, app, timestamp } = props;
-  // console.log(props);
+export default function ItemTitle({
+  item,
+  app,
+}: {
+  item: null | { itemHashName: string; itemName: string; itemIcon: string };
+  app: null | { appId: number; appName: string };
+}) {
+  const [timestamp, setTimestamp] = useState(new Date());
 
   const [priceOverview, setPriceOverview] = useState<{
     lowest_price: string;
@@ -21,10 +26,14 @@ export default function ItemTitle(props: any) {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!app || !item) {
+      return;
+    }
     getItemCurrent(app?.appId, encodeURIComponent(item?.itemHashName)).then(
       (json) => {
         setPriceOverview(json);
         setLoading(false);
+        setTimestamp(new Date());
       }
     );
     getItemHistory2(
@@ -38,9 +47,10 @@ export default function ItemTitle(props: any) {
       getItemCurrent(app?.appId, encodeURIComponent(item?.itemHashName)).then(
         (json) => {
           setPriceOverview(json);
+          setTimestamp(new Date());
         }
       );
-    }, 10000);
+    }, 15000);
     return () => clearInterval(interval);
   }, [item, app]);
 
@@ -73,21 +83,21 @@ export default function ItemTitle(props: any) {
           <div className="w-40 h-40 bg"></div>
         ) : (
           <Image
-            src={`http://cdn.steamcommunity.com/economy/image/${item.itemIcon}`}
+            src={`http://cdn.steamcommunity.com/economy/image/${item?.itemIcon}`}
             width={160}
             height={160}
-            alt={`Icon for ${item.itemName}`}
+            alt={`Icon for ${item?.itemName}`}
             className=""
           ></Image>
         )}
       </div>
       <div className="flex flex-col h-full justify-between">
         <header className="text-6xl">
-          {isLoading ? "Loading" : item.itemName}
+          {isLoading ? "Loading" : item?.itemName}
         </header>
-        <Link href={isLoading ? "" : `/${app.appId}`}>
+        <Link href={isLoading ? "" : `/${app?.appId}`}>
           <p className="text-xl text-cyan-500">
-            {isLoading ? "Loading" : app.appName}
+            {isLoading ? "Loading" : app?.appName}
           </p>
         </Link>
         <div className="flex flex-row place-items-baseline">
@@ -100,7 +110,7 @@ export default function ItemTitle(props: any) {
           {day_diff ? (
             <p
               className={`ml-2 font-semibold text-3xl ${
-                day_diff[0] > 0 ? "text-green-600" : "text-red-400"
+                day_diff[0] >= 0 ? "text-green-600" : "text-red-400"
               }`}
             >
               {`${
