@@ -7,21 +7,20 @@ export default async function ItemSummary({
   itemHash: string;
   appId: number;
 }) {
-  let priceHistory: [[string, number, number]] | null = null;
+  let priceHistory: [string, number, number][] | null = null;
   try {
     priceHistory = await getItemHistory2(appId, itemHash);
   } catch {}
-  let priceOverview: { lowest_price: number } | null = null;
+  let priceOverview: { lowest_price: string } | null = null;
   try {
     priceOverview = await getItemCurrent(appId, itemHash);
   } catch {}
 
   let close;
-  let day_max;
-  let day_min;
-  let year_max;
-  let year_min;
-
+  let day_max: [string, number, number] | null = null;
+  let day_min: [string, number, number] | null = null;
+  let year_max: [string, number, number] | null = null;
+  let year_min: [string, number, number] | null = null;
   if (priceHistory) {
     const cur_date = new Date();
     cur_date.setHours(0, 0, 0, 0);
@@ -35,17 +34,22 @@ export default async function ItemSummary({
       const this_date = new Date(point[0]);
       return this_date.getTime() >= cur_date.getTime();
     });
-    day_min = todayPrice.reduce((acc, current) => [
-      current[0],
-      Math.min(acc[1], current[1]),
-      current[2],
-    ]);
+    if (todayPrice.length != 0) {
+      day_min = todayPrice.reduce((acc, current) => [
+        current[0],
+        Math.min(acc[1], current[1]),
+        current[2],
+      ]);
 
-    day_max = todayPrice.reduce((acc, current) => [
-      current[0],
-      Math.max(acc[1], current[1]),
-      current[2],
-    ]);
+      day_max = todayPrice.reduce((acc, current) => [
+        current[0],
+        Math.max(acc[1], current[1]),
+        current[2],
+      ]);
+    } else {
+      day_min = ["", 9999, 9];
+      day_max = ["", 9999, 9];
+    }
 
     cur_date.setFullYear(cur_date.getFullYear() - 1);
     const yearPrice = priceHistory.filter((point) => {
@@ -64,15 +68,21 @@ export default async function ItemSummary({
       current[2],
     ]);
     if (priceOverview) {
-      if (year_max[1] < priceOverview["lowest_price"]) {
-        year_max[1] = priceOverview["lowest_price"];
-      } else if (year_min[1] > priceOverview["lowest_price"]) {
-        year_min[1] = priceOverview["lowest_price"];
+      if (
+        year_max[1] < parseFloat(priceOverview["lowest_price"].substring(1))
+      ) {
+        year_max[1] = parseFloat(priceOverview["lowest_price"].substring(1));
+      } else if (
+        year_min[1] > parseFloat(priceOverview["lowest_price"].substring(1))
+      ) {
+        year_min[1] = parseFloat(priceOverview["lowest_price"].substring(1));
       }
-      if (day_max[1] < priceOverview["lowest_price"]) {
-        day_max[1] = priceOverview["lowest_price"];
-      } else if (day_min[1] > priceOverview["lowest_price"]) {
-        day_min[1] = priceOverview["lowest_price"];
+      if (day_max[1] < parseFloat(priceOverview["lowest_price"].substring(1))) {
+        day_max[1] = parseFloat(priceOverview["lowest_price"].substring(1));
+      } else if (
+        day_min[1] > parseFloat(priceOverview["lowest_price"].substring(1))
+      ) {
+        day_min[1] = parseFloat(priceOverview["lowest_price"].substring(1));
       }
     }
   }
