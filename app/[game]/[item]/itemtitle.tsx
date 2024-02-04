@@ -34,6 +34,14 @@ export default function ItemTitle(props: any) {
     ).then((data) => {
       setPriceHistory(data.slice(data.length - 30, data.length));
     });
+    const interval = setInterval(() => {
+      getItemCurrent(app?.appId, encodeURIComponent(item?.itemHashName)).then(
+        (json) => {
+          setPriceOverview(json);
+        }
+      );
+    }, 10000);
+    return () => clearInterval(interval);
   }, [item, app]);
 
   let close;
@@ -96,7 +104,7 @@ export default function ItemTitle(props: any) {
               }`}
             >
               {`${
-                (day_diff[1] > 0 ? "+" : "") + day_diff[1].toFixed(2).toString()
+                (day_diff[1] > 0 ? "+" : "") + day_diff[1].toFixed(3).toString()
               } ${
                 (day_diff[0] > 0 ? "+" : "") + day_diff[0].toFixed(2).toString()
               }`}
