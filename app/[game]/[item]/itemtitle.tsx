@@ -17,6 +17,7 @@ export default function ItemTitle(props: any) {
   const [priceHistory, setPriceHistory] = useState<
     [[string, number, string]] | null
   >(null);
+
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -34,6 +35,7 @@ export default function ItemTitle(props: any) {
       setPriceHistory(data.slice(data.length - 30, data.length));
     });
   }, [item, app]);
+
   let close;
   if (priceHistory) {
     const cur_date = new Date();
@@ -45,6 +47,7 @@ export default function ItemTitle(props: any) {
       return cur_date.getTime() === this_date.getTime();
     });
   }
+
   let day_diff;
   if (priceOverview && close) {
     day_diff = [
