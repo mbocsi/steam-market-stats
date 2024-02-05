@@ -1,5 +1,6 @@
 "use client";
 
+import { getClose } from "@/app/lib/pricehistory";
 import { getItemCurrent, getItemHistory2 } from "@/app/lib/requests";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,7 +13,7 @@ export default function ItemTitle({
   item: null | { itemHashName: string; itemName: string; itemIcon: string };
   app: null | { appId: number; appName: string };
 }) {
-  const [timestamp, setTimestamp] = useState(new Date());
+  const [timestamp, setTimestamp] = useState<Date>();
 
   const [priceOverview, setPriceOverview] = useState<{
     lowest_price: string;
@@ -20,7 +21,7 @@ export default function ItemTitle({
   } | null>(null);
 
   const [priceHistory, setPriceHistory] = useState<
-    [[string, number, string]] | null
+    [string, number, number][] | null
   >(null);
 
   const [isLoading, setLoading] = useState(true);
@@ -29,13 +30,15 @@ export default function ItemTitle({
     if (!app || !item) {
       return;
     }
-    getItemCurrent(app?.appId, encodeURIComponent(item?.itemHashName)).then(
-      (json) => {
-        setPriceOverview(json);
-        setLoading(false);
-        setTimestamp(new Date());
-      }
-    );
+    getItemCurrent(
+      app?.appId,
+      encodeURIComponent(item?.itemHashName),
+      true
+    ).then((json) => {
+      setPriceOverview(json);
+      setLoading(false);
+      setTimestamp(new Date());
+    });
     getItemHistory2(
       app?.appId,
       encodeURIComponent(item?.itemHashName),
@@ -44,36 +47,29 @@ export default function ItemTitle({
       setPriceHistory(data.slice(data.length - 30, data.length));
     });
     const interval = setInterval(() => {
-      getItemCurrent(app?.appId, encodeURIComponent(item?.itemHashName)).then(
-        (json) => {
-          setPriceOverview(json);
-          setTimestamp(new Date());
-        }
-      );
+      getItemCurrent(
+        app?.appId,
+        encodeURIComponent(item?.itemHashName),
+        true
+      ).then((json) => {
+        setPriceOverview(json);
+        setTimestamp(new Date());
+      });
     }, 15000);
     return () => clearInterval(interval);
   }, [item, app]);
 
+  const cur_price = priceOverview
+    ? parseFloat(priceOverview["lowest_price"].substring(1))
+    : null;
   let close;
-  if (priceHistory) {
-    const cur_date = new Date();
-    cur_date.setHours(0, 0, 0, 0);
-    // console.log(cur_date);
-    close = priceHistory.find((point) => {
-      const this_date = new Date(point[0]);
-      // console.log(this_date);
-      return cur_date.getTime() === this_date.getTime();
-    });
+  if (priceHistory && timestamp) {
+    close = getClose(priceHistory, timestamp);
   }
 
   let day_diff;
-  if (priceOverview && close) {
-    day_diff = [
-      (100 *
-        (parseFloat(priceOverview["lowest_price"].substring(1)) - close[1])) /
-        close[1],
-      parseFloat(priceOverview["lowest_price"].substring(1)) - close[1],
-    ];
+  if (cur_price && close) {
+    day_diff = [(100 * (cur_price - close)) / close, cur_price - close];
   }
   // console.log(close);
   return (
@@ -129,7 +125,7 @@ export default function ItemTitle({
           hours
         </p>
         <p className="opacity-50 font-semibold">
-          At {timestamp.toLocaleString()}
+          At {timestamp?.toLocaleString()}
         </p>
       </div>
     </div>

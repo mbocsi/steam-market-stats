@@ -1,6 +1,6 @@
 import { getItemHistory2 } from "@/app/lib/requests";
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 export default async function Page({
   params,

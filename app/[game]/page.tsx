@@ -4,7 +4,7 @@ import { getPopularGameItems } from "../lib/requests";
 import Link from "next/link";
 import Image from "next/image";
 
-export const revalidate = 30;
+export const revalidate = 300;
 
 export default async function Page({ params }: { params: { game: string } }) {
   let game;
