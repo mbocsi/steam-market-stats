@@ -49,5 +49,6 @@ model Price {
   item Item @relation(fields: [itemId], references: [itemNameId])
   itemId Int
 
+  @@unique([itemId, date])
   @@index([itemId])
 }

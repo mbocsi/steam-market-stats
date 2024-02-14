@@ -34,7 +34,7 @@ export default function Navbar() {
         <div className={`float-left items-centerbg-opacity-0`}>
           <Link href="/">
             <Image
-              src="/logo.png"
+              src="/alogo-4.webp"
               width={200}
               height={64}
               alt="Steam market stats logo"

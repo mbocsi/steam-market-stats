@@ -3,7 +3,7 @@ import { getPopularItems } from "@/app/lib/requests";
 import SearchBar from "@/app/ui/searchbar";
 import TopItems from "@/app/ui/topitems";
 
-export const revalidate = 30;
+export const revalidate = 300;
 
 export default async function Page() {
   const response = await getPopularItems();
