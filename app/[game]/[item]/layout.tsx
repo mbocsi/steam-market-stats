@@ -2,6 +2,8 @@ import ItemTitle from "./itemtitle";
 import ItemStats from "./itemstats";
 import { getItem, getApp } from "@/app/lib/dbrequests";
 
+export const dynamic = "force-dynamic";
+
 export default async function Layout({
   children,
   params,

@@ -1,8 +1,11 @@
 # Steam Market Statistics Nextjs App
 Displays market metrics on steam market items.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Item Page
+![Alt text](<readme_images/item_page.png>)
+## Home Page
+![Alt text](<readme_images/home_page.png>)
+## Games Page
+![Alt text](<readme_images/games_page.png>)
+## Game Page
+![Alt text](<readme_images/game_page.png>)

@@ -44,7 +44,7 @@ export async function getItemHistory2(
     `/market/listings/${appid}/${itemHash}`;
 
   const res = await fetch(url);
-
+  console.log(res.statusText);
   if (!res.ok) {
     throw new Error(
       `Failed to fetch item page ${res.status} ${res.statusText}\n${url}`

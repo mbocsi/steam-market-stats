@@ -6,6 +6,8 @@ import {
   getYearRange,
 } from "@/app/lib/pricehistory";
 
+export const revalidate = 60;
+
 export default async function ItemSummary({
   itemHash,
   appId,
@@ -45,7 +47,7 @@ export default async function ItemSummary({
     close = getClose(priceHistory, cur_date);
     year_range = getYearRange(priceHistory, cur_date);
     day_range = getDayRange(
-      priceHistory.length > 30 ? priceHistory.slice(-30) : priceHistory,
+      priceHistory.length > 100 ? priceHistory.slice(-100) : priceHistory,
       cur_date
     );
     performance = getTimestampPrice(priceHistory, cur_date);
